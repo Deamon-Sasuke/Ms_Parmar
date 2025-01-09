@@ -171,6 +171,52 @@
                 font-size: 0.75rem;
             }
         }
+        .balloon {
+      position: absolute;
+      bottom: -100px; /* Start below the viewport */
+      width: 60px;
+      height: 80px;
+      background-color: #ff4500; /* Default balloon color */
+      border-radius: 50% 50% 50% 50%; /* Perfectly round shape */
+      animation: float 6s linear infinite;
+      box-shadow: inset -10px -10px 20px rgba(255, 255, 255, 0.4), 
+                  inset 10px 10px 20px rgba(0, 0, 0, 0.2),
+                  0 4px 8px rgba(0, 0, 0, 0.2); /* Add realistic shading */
+    }
+
+    .balloon:before {
+      content: '';
+      position: absolute;
+      bottom: -30px; /* Position the tail */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 40px;
+      background-color: #555; /* String color */
+    }
+
+    .balloon:after {
+      content: '';
+      position: absolute;
+      bottom: -5px; /* Base knot */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background-color: inherit; /* Same as balloon color */
+      border-radius: 50%; /* Circular knot */
+      box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.4),
+                  inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0);
+      }
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
+      }
+    }
 
     </style>
 </head>
@@ -187,6 +233,29 @@
     <audio id="birthdayAudio" src="Birthday.mp3" preload="auto"></audio>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+         // Function to create balloons
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+      balloon.style.backgroundColor = getRandomColor(); // Random color
+      document.body.appendChild(balloon);
+
+      // Remove balloon after animation
+      balloon.addEventListener('animationend', () => {
+        balloon.remove();
+      });
+    }
+
+    // Function to generate random color
+    function getRandomColor() {
+      const colors = ['#FF6347', '#FF69B4', '#1E90FF', '#32CD32', '#FFD700'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Generate balloons at intervals
+    setInterval(createBalloon, 800); // Create every 800ms
+        
 document.querySelectorAll('.toggle-btn').forEach(button => {
     button.addEventListener('click', () => {
         const wish = button.previousElementSibling;
