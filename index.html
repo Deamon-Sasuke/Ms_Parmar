@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      background-image: url("E:/Megs/White.jpg"); /* Replace with your image path */
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: sans-serif;
+      overflow: hidden; /* Prevent scrollbars */
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+      padding: 15px 25px;
+      background-color: #000;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      z-index: 2;
+    }
+
+    a:hover {
+      background-color: #333;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px; /* Start below the viewport */
+      width: 60px;
+      height: 80px;
+      background-color: #ff4500; /* Default balloon color */
+      border-radius: 50% 50% 50% 50%; /* Perfectly round shape */
+      animation: float 6s linear infinite;
+      box-shadow: inset -10px -10px 20px rgba(255, 255, 255, 0.4), 
+                  inset 10px 10px 20px rgba(0, 0, 0, 0.2),
+                  0 4px 8px rgba(0, 0, 0, 0.2); /* Add realistic shading */
+    }
+
+    .balloon:before {
+      content: '';
+      position: absolute;
+      bottom: -30px; /* Position the tail */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 40px;
+      background-color: #555; /* String color */
+    }
+
+    .balloon:after {
+      content: '';
+      position: absolute;
+      bottom: -5px; /* Base knot */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background-color: inherit; /* Same as balloon color */
+      border-radius: 50%; /* Circular knot */
+      box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.4),
+                  inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0);
+      }
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="Megs1.html">Click Here Megha for Birthday Wishes</a>
+    <audio id="birthdayAudio" autoplay>
+      <source src="Megs/Birthday.mp3" type="audio/mp3"> <!-- Replace with your audio file path -->
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <script>
+    var audio = document.getElementById("birthdayAudio");
+
+    // Play audio on user interaction
+    document.addEventListener("click", function () {
+      audio.play();
+    });
+
+    // Play audio when page becomes visible
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") {
+        audio.play();
+      }
+    });
+
+    // Function to create balloons
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+      balloon.style.backgroundColor = getRandomColor(); // Random color
+      document.body.appendChild(balloon);
+
+      // Remove balloon after animation
+      balloon.addEventListener('animationend', () => {
+        balloon.remove();
+      });
+    }
+
+    // Function to generate random color
+    function getRandomColor() {
+      const colors = ['#FF6347', '#FF69B4', '#1E90FF', '#32CD32', '#FFD700'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Generate balloons at intervals
+    setInterval(createBalloon, 800); // Create every 800ms
+  </script>
+</body>
+</html>
